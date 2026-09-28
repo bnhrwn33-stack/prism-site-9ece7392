@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>כפתור שלום</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f8fafc;
+    --bg-elevated: #ffffff;
+    --fg: #0f172a;
+    --fg-muted: #475569;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --accent-glow: rgba(37, 99, 235, 0.35);
+    --card: #ffffff;
+    --border: #e2e8f0;
+    --radius: 10px;
+    --radius-lg: 16px;
+    --transition: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0a0f1a;
+      --bg-elevated: #111827;
+      --fg: #e8ecf1;
+      --fg-muted: #8b95a6;
+      --accent: #3b82f6;
+      --accent-hover: #2563eb;
+      --accent-glow: rgba(59, 130, 246, 0.45);
+      --card: #151d2e;
+      --border: #1f2a3e;
+    }
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  body {
+    font-family: 'Manrope', sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    min-height: 100dvh;
+    display: grid;
+    place-items: center;
+    padding: 2rem;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1 { font-family: 'Outfit', sans-serif; letter-spacing: -0.02em; }
+
+  .btn {
+    appearance: none;
+    border: none;
+    background: var(--accent);
+    color: white;
+    font-family: 'Manrope', sans-serif;
+    font-size: 1.125rem;
+    font-weight: 600;
+    padding: 1rem 2.5rem;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    box-shadow: 0 4px 14px -4px var(--accent-glow), 0 0 0 1px var(--border);
+    transition: transform 0.15s var(--transition), box-shadow 0.2s var(--transition), background 0.2s var(--transition);
+  }
+
+  .btn:hover {
+    background: var(--accent-hover);
+    box-shadow: 0 8px 24px -6px var(--accent-glow), 0 0 0 1px var(--accent);
+    transform: translateY(-2px);
+  }
+
+  .btn:active {
+    transform: translateY(0) scale(0.98);
+    transition-duration: 0.05s;
+  }
+
+  .btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.875rem 1.5rem;
+    font-size: 0.9rem;
+    color: var(--fg);
+    opacity: 0;
+    pointer-events: none;
+    box-shadow: 0 12px 32px -12px rgba(0,0,0,0.25);
+    backdrop-filter: blur(12px) saturate(150%);
+    transition: transform 0.4s var(--transition), opacity 0.3s var(--transition);
+    z-index: 100;
+  }
+
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+    pointer-events: auto;
+  }
+</style>
+</head>
+<body>
+  <button class="btn" id="helloBtn" type="button">שלום</button>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">נלחץ בהצלחה ✓</div>
+
+  <script>
+    const btn = document.getElementById('helloBtn');
+    const toast = document.getElementById('toast');
+    let hideTimer = null;
+
+    btn.addEventListener('click', () => {
+      toast.classList.add('show');
+      clearTimeout(hideTimer);
+      hideTimer = setTimeout(() => toast.classList.remove('show'), 2000);
+    });
+
+    // נגישות: Enter/Space כבר עובדים על button טבעי
+  </script>
+</body>
+</html>
